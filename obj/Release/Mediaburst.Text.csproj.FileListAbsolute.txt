@@ -1,5 +1,0 @@
-C:\Users\martins\Documents\Visual Studio 2010\Projects\Proteus\Mediaburst.Text\bin\Release\Mediaburst.Text.dll
-C:\Users\martins\Documents\Visual Studio 2010\Projects\Proteus\Mediaburst.Text\bin\Release\Mediaburst.Text.pdb
-C:\Users\martins\Documents\Visual Studio 2010\Projects\Proteus\Mediaburst.Text\obj\Release\ResolveAssemblyReference.cache
-C:\Users\martins\Documents\Visual Studio 2010\Projects\Proteus\Mediaburst.Text\obj\Release\Mediaburst.Text.dll
-C:\Users\martins\Documents\Visual Studio 2010\Projects\Proteus\Mediaburst.Text\obj\Release\Mediaburst.Text.pdb

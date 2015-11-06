@@ -20,7 +20,7 @@
         </releaseNotes>
     </metadata>
     <files>
-      <file src="Clockwork\bin\Release\Clockwork.dll" target="lib" />
-      <file src="Clockwork\bin\Release\Clockwork.dll" target="lib" />
+      <file src="bin\Release\Mediaburst.Text.dll" target="lib" />
+      <file src="bin\Release\Mediaburst.Text.dll" target="lib" />
     </files>
 </package>

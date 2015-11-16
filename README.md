@@ -1,8 +1,12 @@
-# GSM Encoding class for C#
+# GSM Encoding class for C# #
 
 Converts characters between the .NET internal Unicode encoding and the GSM03.38 alphabet.
 
 Licensed for use under the MIT license, a full copy can be found in License.txt.
+
+## Installing
+
+Now available as a NuGet package so just ```Install-Package Mediaburst.Text.GSMEncoding```
 
 ## Sample for converting GSM encoding to UTF-8
 

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 /*
  * Copyright (c) 2010 Mediaburst Ltd <hello@mediaburst.co.uk>
@@ -32,7 +30,6 @@ namespace Mediaburst.Text
         private SortedDictionary<uint, char> _byteToChar;
 
         public GSMEncoding()
-            : base()
         {
             PopulateDictionaries();
         }
@@ -43,15 +40,15 @@ namespace Mediaburst.Text
 
             if (chars == null)
             {
-                throw new ArgumentNullException("chars");
+                throw new ArgumentNullException(nameof(chars));
             }
             if (index < 0 || index > chars.Length)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             if (count < 0 || count > (chars.Length - index))
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             for (int i = index; i < count; i++)
@@ -71,32 +68,31 @@ namespace Mediaburst.Text
             // Validate the parameters.
             if (chars == null)
             {
-                throw new ArgumentNullException("chars");
+                throw new ArgumentNullException(nameof(chars));
             }
             if (bytes == null)
             {
-                throw new ArgumentNullException("bytes");
+                throw new ArgumentNullException(nameof(bytes));
             }
             if (charIndex < 0 || charIndex > chars.Length)
             {
-                throw new ArgumentOutOfRangeException("charIndex");
+                throw new ArgumentOutOfRangeException(nameof(charIndex));
             }
             if (charCount < 0 || charCount > (chars.Length - charIndex))
             {
-                throw new ArgumentOutOfRangeException("charCount");
+                throw new ArgumentOutOfRangeException(nameof(charCount));
             }
             if (byteIndex < 0 || byteIndex > bytes.Length)
             {
-                throw new ArgumentOutOfRangeException("byteIndex");
+                throw new ArgumentOutOfRangeException(nameof(byteIndex));
             }
             if (byteIndex + GetByteCount(chars, charIndex, charCount) > bytes.Length)
             {
-                throw new ArgumentException("bytes array too small", "bytes");
+                throw new ArgumentException("bytes array too small", nameof(bytes));
             }
             for (int i = charIndex; i < charIndex + charCount; i++)
             {
-                byte[] charByte;
-                if(_charToByte.TryGetValue(chars[i], out charByte)) 
+               if(_charToByte.TryGetValue(chars[i], out var charByte)) 
                 {
                     charByte.CopyTo(bytes, byteIndex + byteCount);
                     byteCount += charByte.Length;
@@ -111,15 +107,15 @@ namespace Mediaburst.Text
 
             if (bytes == null)
             {
-                throw new ArgumentNullException("bytes");
+                throw new ArgumentNullException(nameof(bytes));
             }
             if (index < 0 || index > bytes.Length)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             if (count < 0 || count > (bytes.Length - index))
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             int i = index;
@@ -153,27 +149,27 @@ namespace Mediaburst.Text
             // Validate the parameters.
             if (bytes == null)
             {
-                throw new ArgumentNullException("bytes");
+                throw new ArgumentNullException(nameof(bytes));
             }
             if (chars == null)
             {
-                throw new ArgumentNullException("chars");
+                throw new ArgumentNullException(nameof(chars));
             }
             if (byteIndex < 0 || byteIndex > bytes.Length)
             {
-                throw new ArgumentOutOfRangeException("byteIndex");
+                throw new ArgumentOutOfRangeException(nameof(byteIndex));
             }
             if (byteCount < 0 || byteCount > (bytes.Length - byteIndex))
             {
-                throw new ArgumentOutOfRangeException("byteCount");
+                throw new ArgumentOutOfRangeException(nameof(byteCount));
             }
             if (charIndex < 0 || charIndex > chars.Length)
             {
-                throw new ArgumentOutOfRangeException("charIndex");
+                throw new ArgumentOutOfRangeException(nameof(charIndex));
             }
             if (charIndex + GetCharCount(bytes, byteIndex, byteCount) > chars.Length)
             {
-                throw new ArgumentException("chars array too small", "chars");
+                throw new ArgumentException("chars array too small", nameof(chars));
             }
 
 
@@ -187,15 +183,14 @@ namespace Mediaburst.Text
                         i++;
                         if (i < bytes.Length && bytes[i] <= 0x7F)
                         {
-                            char nextChar;
-                            uint extendedChar = (0x1B * 255) + (uint)bytes[i];
-                            if (_byteToChar.TryGetValue(extendedChar, out nextChar))
+                           uint extendedChar = (0x1B * 255) + (uint)bytes[i];
+                            if (_byteToChar.TryGetValue(extendedChar, out var nextChar))
                             {
                                 chars[charCount] = nextChar;
                                 charCount++;
                             }
                             // GSM Spec says to try for normal character if escaped one doesn't exist
-                            else if (_byteToChar.TryGetValue((uint)bytes[i], out nextChar))
+                            else if (_byteToChar.TryGetValue(bytes[i], out nextChar))
                             {
                                 chars[charCount] = nextChar;
                                 charCount++;
@@ -204,7 +199,7 @@ namespace Mediaburst.Text
                     }
                     else
                     {
-                        chars[charCount] = _byteToChar[(uint)bytes[i]];
+                        chars[charCount] = _byteToChar[bytes[i]];
                         charCount++;
                     }
                 }
@@ -217,7 +212,7 @@ namespace Mediaburst.Text
         public override int GetMaxByteCount(int charCount)
         {
             if (charCount < 0)
-                throw new ArgumentOutOfRangeException("charCount");
+                throw new ArgumentOutOfRangeException(nameof(charCount));
             
             return charCount * 2;
         }
@@ -225,7 +220,7 @@ namespace Mediaburst.Text
         public override int GetMaxCharCount(int byteCount)
         {
             if (byteCount < 0)
-                throw new ArgumentOutOfRangeException("byteCount");
+                throw new ArgumentOutOfRangeException(nameof(byteCount));
             
             return byteCount;
         }
@@ -382,9 +377,9 @@ namespace Mediaburst.Text
             {
                 uint charByteVal = 0;
                 if (charToByte.Value.Length == 1)
-                    charByteVal = (uint)charToByte.Value[0];
+                    charByteVal = charToByte.Value[0];
                 else if (charToByte.Value.Length == 2)
-                    charByteVal = ((uint)charToByte.Value[0] * 255) + (uint)charToByte.Value[1];
+                    charByteVal = ((uint)charToByte.Value[0] * 255) + charToByte.Value[1];
                 _byteToChar.Add(charByteVal, charToByte.Key);
             }
             _byteToChar.Add(0x1B1B, '\u0020'); // GSM char set says to map 1B1B to a space
